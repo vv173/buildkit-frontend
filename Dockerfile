@@ -1,6 +1,4 @@
-FROM moby/buildkit:v0.11.5 as buildkit
-
-FROM alpine:3.17.3 as buildkit-frontend
+FROM alpine:3.17.3
 
 ARG DOCKER_USERNAME
 ARG DOCKER_PASSWORD
