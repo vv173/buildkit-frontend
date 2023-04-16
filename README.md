@@ -5,17 +5,33 @@ This project provides a Dockerfile for the frontend of Buildkit engine. The Dock
 ***Prerequisites***
 
 Buildkit daemon
+
 Docker
+
 Git
 
-**Building the Docker Image**
+Running ssh-agent
+
+***Ensure that the ssh-agent is running.***
+```
+$ eval $(ssh-agent)
+$ ssh-add ~/.ssh/id_rsa
+(Input your passphrase here)
+```
+
+***To run buildkit daemon in a container:***
+```
+docker run -d --name buildkitd --privileged moby/buildkit:latest
+```
+
+***Building the Docker Image***
 
 To build the Docker image, run the following command:
 ```
-docker build --ssh default --build-arg DOCKER_PASSWORD=$DOCKER_PASSWORD --build-arg DOCKER_USERNAME=$DOCKER_USERNAME -t build-front . 
+docker build --ssh default=$HOME/.ssh/name_of_your_ssh_key --build-arg DOCKER_PASSWORD=$DOCKER_PASSWORD --build-arg DOCKER_USERNAME=$DOCKER_USERNAME -t build-front . 
 ```
 
-**Running the Docker Container**
+***Running the Docker Container***
 
 To run the Docker container, run the following command:
 ```
