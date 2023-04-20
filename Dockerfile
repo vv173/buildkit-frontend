@@ -1,10 +1,8 @@
 FROM alpine:3.17.3
 
 ARG DOCKER_USERNAME
-ARG DOCKER_PASSWORD
 
 ENV DOCKER_USERNAME=$DOCKER_USERNAME
-ENV DOCKER_PASSWORD=$DOCKER_PASSWORD
 ENV BUILDKIT_HOST=docker-container://buildkit
 
 RUN apk update && apk add --no-cache \
@@ -22,7 +20,7 @@ RUN mkdir -p -m 0600 ~/.ssh && \
 
 RUN --mount=type=ssh git clone git@github.com:vv173/dockerizing-nodejs-with-multistage.git node-app
 
-RUN echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin
+RUN --mount=type=secret,id=docker-secret cat /run/secrets/docker-secret | docker login --username "$DOCKER_USERNAME" --password-stdin
 
 WORKDIR /node-app
 

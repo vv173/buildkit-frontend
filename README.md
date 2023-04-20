@@ -28,12 +28,12 @@ docker run -d --name buildkitd --privileged moby/buildkit:latest
 
 To build the Docker image, run the following command:
 ```
-docker build --ssh default=$HOME/.ssh/name_of_your_ssh_key --build-arg DOCKER_PASSWORD=$DOCKER_PASSWORD --build-arg DOCKER_USERNAME=$DOCKER_USERNAME -t build-front . 
+docker build --ssh default=$HOME/.ssh/name_of_your_ssh_key --secret id=docker-secret,env=DOCKER_PASSWORD --build-arg DOCKER_USERNAME=$DOCKER_USERNAME -t buildkit-front . 
 ```
 
 ***Running the Docker Container***
 
 To run the Docker container, run the following command:
 ```
-docker run -dt -v /var/run/docker.sock:/var/run/docker.sock --name buildtest build-front
+docker run -dt -v /var/run/docker.sock:/var/run/docker.sock --name buildkit-con buildkit-front
 ```
